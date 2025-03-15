@@ -7,17 +7,15 @@ import { ORDER_SERVICE, envs } from 'src/config';
   controllers: [OrdersController],
   imports: [
     ClientsModule.register([
-      
-      { 
-        name: ORDER_SERVICE, 
+      {
+        name: ORDER_SERVICE,
         transport: Transport.TCP,
         options: {
           host: envs.ordersMicroserviceHost,
-          port: envs.ordersMicroservicePort
-        }
+          port: envs.ordersMicroservicePort,
+        },
       },
-
     ]),
-  ]
+  ],
 })
 export class OrdersModule {}
