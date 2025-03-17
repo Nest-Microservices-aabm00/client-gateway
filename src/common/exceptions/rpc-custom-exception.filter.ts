@@ -10,21 +10,22 @@ export class RpcCustomExceptionFilter implements ExceptionFilter {
 
     const rpcError = exception.getError();
 
-    if ( rpcError.toString().includes('Empty response') ) {
+    // Cuando se ha caido algun contenedor de la aplicación
+    if (rpcError.toString().includes('Empty response')) {
       return response.status(500).json({
         status: 500,
-        message: rpcError.toString().substring(0, rpcError.toString().indexOf('(') - 1)
-      })
+        message: rpcError
+          .toString()
+          .substring(0, rpcError.toString().indexOf('(') - 1),
+      });
     }
-
-
 
     if (
       typeof rpcError === 'object' &&
       'status' in rpcError &&
       'message' in rpcError
     ) {
-      const status = isNaN(+rpcError.status) ? 400 :+rpcError.status;
+      const status = isNaN(+rpcError.status) ? 400 : +rpcError.status;
       return response.status(status).json(rpcError);
     }
 
